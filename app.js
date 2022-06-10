@@ -251,9 +251,7 @@ app.post("/webhook", (req, res) => {
           query === "Programming" ||
           query === "Miscellaneous" ||
           query === "Dark" ||
-          query === "Pun" ||
-          query === "Spooky" ||
-          query === "Christmas"
+          query === "Pun"
         ) {
           $.getJSON(
             `https://v2.jokeapi.dev/joke/${query}?type=single`,
@@ -278,7 +276,7 @@ app.post("/webhook", (req, res) => {
           );
         } else if (query === "Types" || query === "Type") {
           sendtext(
-            "Available joke types: Programming, Miscellaneous, Dark, Pun, Spooky, Christmas"
+            "Available joke types: Programming, Miscellaneous, Dark, Pun"
           );
         } else {
           sendtext(
@@ -371,6 +369,7 @@ app.post("/webhook", (req, res) => {
                 id.endsWith(".jpeg")
               ) {
                 sendimage(id, query);
+                sendtext("In case WhatsApp API fails: "+id);
               } else {
                 count++;
 
@@ -410,6 +409,7 @@ app.post("/webhook", (req, res) => {
                   id.endsWith(".jpeg")
                 ) {
                   sendimage(id, query);
+                  sendtext("In case WhatsApp API fails: "+id);
                 } else {
                   count++;
 
@@ -491,6 +491,7 @@ Try '$2d categories' for help.`;
                   id.endsWith(".jpeg")
                 ) {
                   sendimage(id, query);
+                  sendtext("In case WhatsApp API fails: "+id);
                 } else {
                   count++;
 
@@ -529,6 +530,7 @@ Try '$2d categories' for help.`;
                     id.endsWith(".jpeg")
                   ) {
                     sendimage(id, query);
+                    sendtext("In case WhatsApp API fails: "+id);
                   } else {
                     count++;
 
@@ -630,6 +632,12 @@ Try '$2d categories' for help.`;
           }
   
                  else {
+                   
+                   if (params[3] <= params[2]){
+                     
+                     sendtext("Error: Verse_Range_End smaller or equal to Verse_Range_Start")
+                   }
+                   else{
                  
               
                   var parser = parse({columns: true}, function (err, records) {
@@ -691,20 +699,19 @@ Try '$2d categories' for help.`;
                     
                     var i = 0;                  //  set your counter to 1
 
-                    function myLoop() {         //  create a loop function
+                    function myLoop2() {         //  create a loop function
                       setTimeout(function() {   //  call a 3s setTimeout when the loop is called
                         sending2();   //  your code here
                         i++;                    //  increment the counter
                         if ( i < records.length) {           //  if the counter < 10, call the loop function
-                          myLoop();             //  ..  again which will trigger another 
+                          myLoop2();             //  ..  again which will trigger another 
                         } 
                        
                       
                     //  ..  setTimeout()
-                      }, 500)
+                      }, 0)
                     }
-
-                    myLoop(); 
+                    myLoop2(); 
                     
                    
                     }
@@ -712,7 +719,7 @@ Try '$2d categories' for help.`;
                 });
 
                 fs.createReadStream(__dirname+'/kjv.csv').pipe(parser);
-                
+                 }
                  }
             }
             
